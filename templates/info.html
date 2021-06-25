@@ -1,0 +1,72 @@
+{% extends 'index.html' %}
+
+{%block bodyblock %}
+
+        <div class="container">
+            <br><br>
+            <h2 class="content"> Informacje <span style="color:#198b90">o projekcie</span></h2>
+        <br>
+            <p style="text-indent: 10%; ">
+
+             <h3 class="text-justify-desktop">Cel Projektu</h3>
+             
+
+                Celem projektu było stworzenie systemu, który umożliwi detekcję twarzy w obrazie przechwyconym z kamery, oraz ich identyfikację. Powinien on działać wczasie rzeczywistym i mieć dużą skuteczność rozpoznawania. Aplikacja będzie mogła   być   wykorzystana   np.   w   firmach jako system kontroli dostępu. 
+            </p>
+
+            <p>
+            <h3 class="text-justify-desktop">Realizacja</h3>
+
+            Przedmiotem   pracy   była  budowa   systemu   detekcji   i   identyfikacji   twarzy   w obrazach   przechwyconych   z   kamery.   Aplikacja została napisana w języku Python (wersja 3.8.5), do analizy obrazu  zostały   wykorzystane   funkcje dostarczane przez bibliotekę OpenCV. <br>
+
+            Detekcja twarzy odbywa się przy użyciu kaskadowego klasyfikatora  Haar’a   umożliwiającego  dość   dobrą   detekcje   obiektów, przy niewielkim zapotrzebowaniu na moc obliczeniową. <br>
+
+            Biblioteka OpenCV od wersji 2.4 wspiera także rozpoznawanie algorytmy rozpoznawania twarzy (klasa FaceRecognizer) wspomagająca tworzenie aplikacji rozpoznających twarze. <br>
+
+            Zaimplementowano w niej metody służące do trenowania algorytmu za pomocą bazy danych z twarzami, przewidywania (odgadywania) największego podobieństwa rozpoznawanej twarzy do tych z bazy danych, ładowania/zapisywania wytrenowanego modelu do pliku XML lub YAML. <br>
+            Obecnie biblioteka dysponuje, aż 3 różnymi algorytmami rozpoznawania twarzy: <br>
+
+            <ul>
+            <li>Eigenfaces
+            <li>Fisherfaces
+            <li><b>LBPH</b>
+            </ul>
+
+            Na potrzeby aplikacji został wykorzystany algorytm <b>LBPH</b> gdyż wykazał się on największą skutecznością w środowisku pracy systemu. 
+
+            Na rysunku poniżej przedstawiony został schemat blokowy działania aplikacji. <br>
+            </p>
+            <p>
+                <div class="container">
+            <img src="{{ url_for('static', filename='images/schemat.jpg') }}" alt="" width="800" >
+                </div>
+                <br>
+
+            Dla każdej nowej osoby dodawanej do zbioru uczącego wykonywane jest 50 zdjęć twarzy, na podstawie których później dokonanujemy uczenia modelu (algorytm LBPH). <br>
+            Ilość zdjęć została dobrana na podstawie badania skuteczności modelu oraz czasu wykonywania operacji. Dodanie nowej osoby do zbioru uczącego nie zajmuje dłużej niż 15 sekund. <br>
+            Po przeprowadzonym treningu, parametry modelu zapisywane są do pliku “trainer.yml”<br>
+
+            W celu ułatwienia obsługi aplikacji, streaming danych z kamery wraz z wynikami predykcji jest przesyłany do serwera webowego utworzonego przy użyciu frameworka flask. 
+            </p>
+            <p>
+            <h3 class="text-justify-desktop">Wnioski</h3>
+            
+            Otrzymane wyniki potwierdzają skuteczność metody kaskadowego klasyfikatora Haar’a  w procesie detekcji twarzy. <br>
+            Działa ona dobrze nawet dla twarzy znajdujących się w dużejodległości od kamery oraz na obrazie o niskiej rozdzielczości. <br>
+
+            Algorytm rozpoznawania twarzy LBPH najlepiej radzi sobie z predykcją w stałych warunkach oświetleniowych lecz niepodważalnym jego atutem są małe zapotrzebowanie na moc obliczeniową oraz szybkość działania, co w streamingu wideo jest dużą zaletą. <br>
+
+            Aplikacja może być z powodzeniem wykorzystana jako system kontroli dostępu I być dodatkowo rozbudowywana o dodatkowe funkcje takie jak np. Zapis do bazy danych. 
+
+        </p>
+
+
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+{% endblock  %}
